@@ -1,20 +1,18 @@
 package ru.netology.javaqa.collection;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Game {
-    private final List<Player> registeredPlayers = new ArrayList<>();
+    private final Map<String, Player> registeredPlayers = new HashMap<>();
 
-    // Регистрация игрока
     public void register(Player player) {
-        registeredPlayers.add(player);
+        registeredPlayers.put(player.getName(), player);
     }
 
-    // Проведение раунда между двумя игроками по именам
     public int round(String playerName1, String playerName2) {
-        Player player1 = findPlayerByName(playerName1);
-        Player player2 = findPlayerByName(playerName2);
+        Player player1 = registeredPlayers.get(playerName1);
+        Player player2 = registeredPlayers.get(playerName2);
 
         if (player1 == null) {
             throw new NotRegisteredException("Игрок " + playerName1 + " не зарегистрирован");
@@ -33,15 +31,5 @@ public class Game {
         } else {
             return 0;
         }
-    }
-
-    // метод для поиска игрока по имени
-    private Player findPlayerByName(String name) {
-        for (Player player : registeredPlayers) {
-            if (player.getName().equals(name)) {
-                return player;
-            }
-        }
-        return null;
     }
 }
